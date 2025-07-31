@@ -28,4 +28,4 @@
 
 ## Unit Testing
 
-The project includes a `MockCountryService` that conforms to the same protocol as the live `CountryService`. It is used to simulate various responses (failure to fetch countries for example) for unit testing `FetchCountriesUseCase` and view models without making real network calls.
+The project includes a MockCountryServiceFailure that inherits the live `CountryService`. It is used to simulate various responses (failure to fetch countries for example) for unit testing FetchCountriesUseCase and view models without making real network calls.
