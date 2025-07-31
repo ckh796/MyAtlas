@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  MyAtlas
+
+  Created by Charbel Khalifeh Hachem on 31/07/2025.
+  
+*/
+
+"search_countries_note" = "Search countries and add to your destinations...";
+"max_dest_reached" = "Maximum Destinations Reached";
+"max_dest_reached_note" = "You can only add up to 5 favorite countries.";
+"ok" = "Okay";
+"top_destinations" = "Your top destinations";
+"hold_to_remove"= "Hold to delete destination";
+"no_destinations_yet" = "No destinations yet.\nTap the magnifying glass to begin adding.";
+"delete" = "Delete";
+"cancel" = "Cancel";
+"remove_destination" = "Delete Destination";
+"remove_dest_note" = "Are you sure you want to delete destination?";
