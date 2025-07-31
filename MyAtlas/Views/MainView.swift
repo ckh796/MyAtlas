@@ -8,6 +8,7 @@
 import SwiftUI
 
 
+
 struct MainView: View {
     @StateObject private var viewModel = MainViewModel()
     
@@ -17,46 +18,69 @@ struct MainView: View {
     ]
     
     var body: some View {
-        ScrollView {
-            if !viewModel.favoriteCountries.isEmpty {
-                
-                Text("top_destinations".localized)
-                    .font(.system(size: 20, weight: .semibold))
+        ZStack {
+            // Gradient background
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color(.systemGroupedBackground),
+                    Color("PrimaryColor")
+                ]),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
+            
+            if viewModel.isLoadingInitialCountry {
+                ProgressView("loading_location".localized)
+                    .progressViewStyle(CircularProgressViewStyle())
                     .foregroundColor(.primary)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 20)
-                    .padding(.top, 20)
-                
-                LazyVGrid(columns: columns, spacing: 24) {
-                    ForEach(viewModel.favoriteCountries, id: \.alpha2Code) { country in
-                        NavigationLink {
-                            DetailView(country: country)
-                        } label: {
-                            FavoriteCountryCell(
-                                country: country,
-                                onLongPress: {
-                                    viewModel.promptRemove(country)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else {
+                ScrollView {
+                    if !viewModel.favoriteCountries.isEmpty {
+                        Text("top_destinations".localized)
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, 20)
+                            .padding(.top, 20)
+                        
+                        LazyVGrid(columns: columns, spacing: 24) {
+                            ForEach(viewModel.favoriteCountries, id: \.alpha2Code) { country in
+                                NavigationLink {
+                                    DetailView(country: country)
+                                } label: {
+                                    FavoriteCountryCell(
+                                        country: country,
+                                        onLongPress: {
+                                            viewModel.promptRemove(country)
+                                        }
+                                    )
                                 }
-                            )
+                                .buttonStyle(PlainButtonStyle())
+                            }
                         }
-                        .buttonStyle(PlainButtonStyle()) // prevents default blue highlight
+                        .padding(.horizontal, 20)
+                        
+                        Text("hold_to_remove".localized)
+                            .font(.footnote)
+                            .foregroundColor(.black)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.top, 12)
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("no_destinations_yet".localized)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(.primary)
+                                .padding()
+                            Spacer()
+                        }
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                     }
                 }
-                .padding(.horizontal, 20)
-                
-                Text("hold_to_remove".localized)
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.top, 12)
-                
-            } else {
-                Text("no_destinations_yet".localized)
-                    .frame(maxWidth: .infinity)
-                    .padding()
             }
         }
-        .background(Color(.systemGroupedBackground))
         .navigationTitle("")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -84,13 +108,13 @@ struct MainView: View {
         }
         .onAppear {
             viewModel.loadFavorites()
+            viewModel.requestInitialCountryIfNeeded()
         }
         .alert("max_dest_reached".localized, isPresented: $viewModel.showMaxAlert) {
             Button("ok".localized, role: .cancel) { }
         } message: {
             Text("max_dest_reached_note".localized)
         }
-        .preferredColorScheme(.light)
         .alert("remove_destination".localized, isPresented: $viewModel.showRemoveAlert) {
             Button("delete".localized, role: .destructive) {
                 if let country = viewModel.countryToRemove {
@@ -101,6 +125,7 @@ struct MainView: View {
         } message: {
             Text("remove_dest_note".localized)
         }
+        .preferredColorScheme(.light)
     }
 }
 
