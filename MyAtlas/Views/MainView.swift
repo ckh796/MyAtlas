@@ -29,10 +29,17 @@ struct MainView: View {
                 
                 LazyVGrid(columns: columns, spacing: 24) {
                     ForEach(viewModel.favoriteCountries, id: \.alpha2Code) { country in
-                        FavoriteCountryCell(country: country,
-                                            onLongPress: {
-                            viewModel.promptRemove(country)
-                        })
+                        NavigationLink {
+                            DetailView(country: country)
+                        } label: {
+                            FavoriteCountryCell(
+                                country: country,
+                                onLongPress: {
+                                    viewModel.promptRemove(country)
+                                }
+                            )
+                        }
+                        .buttonStyle(PlainButtonStyle()) // prevents default blue highlight
                     }
                 }
                 .padding(.horizontal, 20)
