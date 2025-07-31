@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-final class CountryService: NSObject {
+class CountryService: NSObject {
     private var session: URLSession!
     private var dataTask: URLSessionDataTask?
     private var receivedData = Data()

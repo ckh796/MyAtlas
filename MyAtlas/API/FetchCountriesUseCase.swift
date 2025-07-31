@@ -10,8 +10,12 @@ import Combine
 final class FetchCountriesUseCase {
     private let countryService: CountryService
     
-    init(countryService: CountryService = CountryService()) {
-        self.countryService = countryService
+    init(isUnitTesting: Bool) {
+        if isUnitTesting {
+            self.countryService = MockCountryServiceFailure()
+        } else {
+            self.countryService = CountryService()
+        }
     }
     
     func execute() -> AnyPublisher<(progress: Double, countries: [Country]?), Error> {
