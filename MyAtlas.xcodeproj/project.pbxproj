@@ -57,11 +57,6 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		F0AD04902E416B9B0063B5C9 /* MyAtlasTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MyAtlasTests;
-			sourceTree = "<group>";
-		};
 		F0FEA7A42E3A293300B9375E /* MyAtlas */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -99,7 +94,6 @@
 				F0C483862E3A8517007DD843 /* CountryEntity+CoreDataClass.swift */,
 				F0C483872E3A8517007DD843 /* CountryEntity+CoreDataProperties.swift */,
 				F0FEA7A42E3A293300B9375E /* MyAtlas */,
-				F0AD04902E416B9B0063B5C9 /* MyAtlasTests */,
 				F0FEA7A32E3A293300B9375E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -128,9 +122,6 @@
 			);
 			dependencies = (
 				F0AD04942E416B9B0063B5C9 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				F0AD04902E416B9B0063B5C9 /* MyAtlasTests */,
 			);
 			name = MyAtlasTests;
 			packageProductDependencies = (
