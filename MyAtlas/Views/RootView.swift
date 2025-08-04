@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RootView: View {
-    @StateObject private var viewModel = LoadingViewModel(useCase: FetchCountriesUseCase(isUnitTesting: TestingConfig.isUnitTesting))
+    @StateObject private var viewModel = LoadingViewModel(useCase: FetchCountriesUseCase())
 
     var body: some View {
         if viewModel.isFinished {
